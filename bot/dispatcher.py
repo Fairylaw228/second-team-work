@@ -7,6 +7,7 @@ import config
 logging.basicConfig(level=logging.INFO)
 
 # prerequisites
+
 if not config.BOT_TOKEN:
     exit("No token provided")
 

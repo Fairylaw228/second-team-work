@@ -16,7 +16,9 @@ async def start(message: types.Message):
         if (db_result[5] == 2):
             await message.bot.send_message(message.from_user.id, BotDB.get_message("start_ban_message"))
         if (db_result[5] == 1):
-            await message.bot.send_message(message.from_user.id, BotDB.get_message("start_regIsConfirmed_message"))
+            await message.bot.send_message(message.from_user.id, BotDB.get_message("start_regIsConfirmed_message"))#Для заказа пропуска ввердите номер и марку машины!
+
+
 
 @dp.message_handler(commands=['help'])
 async def help(message: types.Message):
@@ -43,7 +45,7 @@ async def echo_message(message: types.Message):
                     if(not re.match(r"^(?=.{1,40}$)[а-яёА-ЯЁ]+(?:[-' ][а-яёА-ЯЁ]+)*$", uname)):
                         await message.bot.send_message(message.chat.id, BotDB.get_message("error_checkName_message"))
                     else:
-                        if (BotDB.add_user( uname, phone, num, message.from_user.id)): # записываем результат в базу
+                        if (BotDB.add_user( uname, phone, num, message.from_user.id)): #### записываем результат в базу
                             await message.bot.send_message(message.chat.id, BotDB.get_message("regIsCompleted_message") % (uname, phone, num))
                         else:
                             await message.bot.send_message(message.chat.id, BotDB.get_message("error_reg_message"))
@@ -62,15 +64,17 @@ async def echo_message(message: types.Message):
             user_req = user_req.strip().split(" ")
         
             if (len(user_req) == 2): # параметров должно быть 2
-                a_num = user_req[0].strip()
-                a_model = user_req[1].strip()
-                if (not re.match(r'^\w?(\d{3})(\w{2}(\d{2,3})?)?', a_num)):
+                mark1 = user_req[0].strip()
+                number = user_req[1].strip()
+                if (not re.match(r'^\w?(\d{3})(\w{2}(\d{2,3})?)?', mark1)):
                     await message.bot.send_message(message.from_user.id, BotDB.get_message("error_checkCarNum_message"))
                 else:
-                    await message.bot.send_message(message.from_user.id, BotDB.get_message("requestIsCompleted_message") % (a_num, a_model))
+                    if (BotDB.reg_car1( message.from_user.id, mark1, number)):
+                        await message.bot.send_message(message.from_user.id, BotDB.get_message("requestIsCompleted_message") % (mark1, number))
+                        
             else:
                 # заявка заполнена не правильно - предупреждение
-                await message.bot.send_message(message.from_user.id, BotDB.get_message("error_repeatRequest"))
+                await message.bot.send_message(message.from_user.id, BotDB.get_message("error_repeatRequest"))# неверный ввод. для заказа пропуска введите номер и марку машины
 
 
 def check_phone( text ):
