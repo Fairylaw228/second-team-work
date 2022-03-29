@@ -55,7 +55,7 @@
                     id: e.data.record.id,
                     approved: 2
                 };
-                $.ajax({ url: '/reg_car1/update', data: record, method: 'POST' })  
+                $.ajax({ url: '/check_cars/update', data: record, method: 'POST' })  
                 .done(function () {
                     alert('Nice.');
                     grid.reload();
@@ -67,12 +67,12 @@
         }
         $(document).ready(function () {
             grid = $('#grid').grid({
-                dataSource: '/reg_car1/',
+                dataSource: '/check_cars/',
                 columns: [
 
-                    { field: 'mark1', title: 'Марка', sortable: true},
-                    { field: 'id_telegramm', title: 'ID телеграмм пользователя'},
-                    { field: 'number', title: 'Номер машины'},
+                    { field: 'num_car', title: 'Номер', sortable: true},
+                    { field: 'add_info', title: 'Информация о машине'},
+                    { field: 'telegram_user_id', title: 'Id телеграмм пользователя'},
                     { field: 'id', title: 'id', hidden: true},
                     { field: 'approved', title: 'Действия'},
                     { width: 124, tmpl: '<button>Добавить</button>', align: 'center', events: { 'click': Dob } },

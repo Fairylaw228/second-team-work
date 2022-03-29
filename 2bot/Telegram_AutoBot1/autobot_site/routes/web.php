@@ -36,9 +36,9 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-Route::apiResource('reg_car1', CheckCarsController::class)->middleware('role');
+Route::apiResource('check_cars', CheckCarsController::class)->middleware('role');
 
-Route::post('reg_car1/update', [CheckCarsController::class, 'update'])->middleware('role');
+Route::post('check_cars/update', [CheckCarsController::class, 'update'])->middleware('role');
 
 
 

@@ -14,10 +14,16 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
         <button type="submit">Выйти</button>
     </form>
+
+    <form action="{{ route('CheckCars') }}" method="GET">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+        <button type="submit">Список машин</button>
+    </form>
+
     <table id="grid"></table>
     <script type="text/javascript">
     var grid;
-    function Dob(e) {
+    function UpAdd(e) {
             $.ajaxSetup({
                 headers : {
                     'X-CSRF-Token' : "{{ csrf_token() }}"
@@ -25,13 +31,14 @@
             });
             if (confirm('Are you sure?')) {
                 var record = {
-                    mark1: e.data.record.mark1,
-                    id_telegramm: e.data.record.id_telegramm,
-                    number: e.data.record.number,
                     id: e.data.record.id,
+                    name: e.data.record.name,
+                    phone_number: e.data.record.phone_number,
+                    lot_number: e.data.record.lot_number,
+                    telegram_id: e.data.record.telegram_id,
                     approved: 1
                 };
-                $.ajax({ url: '/check_cars/update', data: record, method: 'POST' })  
+                $.ajax({ url: '/telegram_user/update', data: record, method: 'POST' })  
                 .done(function () {
                     alert('Nice.');
                     grid.reload();
@@ -41,7 +48,7 @@
                 });
             }
         }
-        function Del(e) {
+        function Update(e) {
             $.ajaxSetup({
                 headers : {
                     'X-CSRF-Token' : "{{ csrf_token() }}"
@@ -49,13 +56,14 @@
             });
             if (confirm('Are you sure?')) {
                 var record = {
-                    mark1: e.data.record.mark1,
-                    id_telegramm: e.data.record.id_telegramm,
-                    number: e.data.record.number,
                     id: e.data.record.id,
+                    name: e.data.record.name,
+                    phone_number: e.data.record.phone_number,
+                    lot_number: e.data.record.lot_number,
+                    telegram_id: e.data.record.telegram_id,
                     approved: 2
                 };
-                $.ajax({ url: '/reg_car1/update', data: record, method: 'POST' })  
+                $.ajax({ url: '/telegram_user/update', data: record, method: 'POST' })  
                 .done(function () {
                     alert('Nice.');
                     grid.reload();
@@ -67,16 +75,16 @@
         }
         $(document).ready(function () {
             grid = $('#grid').grid({
-                dataSource: '/reg_car1/',
+                dataSource: '/telegram_user/',
                 columns: [
-
-                    { field: 'mark1', title: 'Марка', sortable: true},
-                    { field: 'id_telegramm', title: 'ID телеграмм пользователя'},
-                    { field: 'number', title: 'Номер машины'},
                     { field: 'id', title: 'id', hidden: true},
+                    { field: 'name', title: 'ФИО', sortable: true},
+                    { field: 'phone_number', title: 'Номер телеофна'},
+                    { field: 'lot_number', title: 'Номер участка'},
+                    { field: 'telegram_id', title: 'ID Телеграма'},
                     { field: 'approved', title: 'Действия'},
-                    { width: 124, tmpl: '<button>Добавить</button>', align: 'center', events: { 'click': Dob } },
-                    { width: 124, tmpl: '<button>Бан</button>', align: 'center', events: { 'click': Del } }
+                    { width: 124, tmpl: '<button>Добавить</button>', align: 'center', events: { 'click': UpAdd } },
+                    { width: 124, tmpl: '<button>Бан</button>', align: 'center', events: { 'click': Update } }
                 ],
                 pager: { limit: 5 }
             });

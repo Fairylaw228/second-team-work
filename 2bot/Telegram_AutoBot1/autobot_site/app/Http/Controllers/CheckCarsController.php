@@ -32,13 +32,13 @@ class CheckCarsController extends Controller
      */
     public function store(CheckCarsRequestCreate $request)
     {
-        $RegCar1 = RegCar1::make(
+        $CheckCars = CheckCars::make(
             $request->getMark1(),
             $request->getIdTelegramm(),
             $request->getNumber(),
             $request->getApproved()
         );
-        $RegCar1->save();
+        $CheckCars->save();
         
         return response()->json(['message' => 'success', 'records' => $CheckCars], 200);
     }
@@ -49,7 +49,7 @@ class CheckCarsController extends Controller
      * @param  \App\Models\CheckCars  $CheckCars
      * @return \Illuminate\Http\Response
      */
-    public function show(RegCar1 $RegCar1)
+    public function show(CheckCars $CheckCars)
     {
         return response()->json(['message' => 'success', 'records' => $CheckCars], 200);
     }
@@ -63,14 +63,14 @@ class CheckCarsController extends Controller
      */
     public function update(CheckCarsRequestUpdate $request, CheckCars $CheckCars)
     {
-        $RegCar1 = RegCar1::getCheckCarsById($request->getId());////////
+        $CheckCars = CheckCars::getCheckCarsById($request->getId());////////
 
-        $RegCar1->setMark1IfNotEmpty($request->getMark1());
-        $RegCar1->setIdTelegrammIfNotEmpty($request->getIdTelegramm());
-        $RegCar1->setNumberIfNotEmpty($request->getNumber());
-        $RegCar1->setApprovedIfNotEmpty($request->getApproved());
+        $CheckCars->setMark1IfNotEmpty($request->getMark1());
+        $CheckCars->setIdTelegrammIfNotEmpty($request->getIdTelegramm());
+        $CheckCars->setNumberIfNotEmpty($request->getNumber());
+        $CheckCars->setApprovedIfNotEmpty($request->getApproved());
 
-        $RegCar1->save();
+        $CheckCars->save();
         
         return response()->json(['message' => 'success', 'records' => $CheckCars], 200);
     }

@@ -55,7 +55,7 @@
                     id: e.data.record.id,
                     approved: 2
                 };
-                $.ajax({ url: '/reg_car1/update', data: record, method: 'POST' })  
+                $.ajax({ url: '/check_cars/update', data: record, method: 'POST' })  
                 .done(function () {
                     alert('Nice.');
                     grid.reload();
@@ -67,7 +67,7 @@
         }
         $(document).ready(function () {
             grid = $('#grid').grid({
-                dataSource: '/reg_car1/',
+                dataSource: '/check_cars/',
                 columns: [
 
                     { field: 'mark1', title: 'Марка', sortable: true},
